@@ -37,11 +37,8 @@
     </div>
   </header>
   <!--ヘッダーの記述-->
-
-  <div class="container">
-    <p></p>
-    <p id="notice"><%= flash[:notice] %></p> <!--デバイスでnotice設定されているので呼び出してるだけ-->
-    <% if user_signed_in? %>
+  <% if user_signed_in? %>
+  <div class="search-form" style="margin-top: 70px; text-align: center;">
     <!-- 検索機能 -->
     <%= form_tag(search_path, method: :get ) do %>
     <%= text_field(@search_content, :search_word ) %>
@@ -49,7 +46,12 @@
     <%= select(@search_content, :search_method, [["前方一致", "forward_match"],["後方一致", "backward_match"],["完全一致", "perfect_match"],["部分一致", "partial_match"]]) %>
     <%= submit_tag 'Search', name: :nil %>
     <% end %>
-    <% end %>
+  </div>
+  <% end %>
+
+  <div class="container">
+    <p></p>
+    <p id="notice"><%= flash[:notice] %></p> <!--デバイスでnotice設定されているので呼び出してるだけ-->
     <%= yield %>
   </div>
 </body>
