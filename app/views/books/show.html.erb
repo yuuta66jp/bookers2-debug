@@ -27,11 +27,13 @@
 				<td><%= link_to "Edit",edit_book_path(@book), class: "btn-sm btn-success edit_book_#{@book.id}" %></td>
 				<td><%= link_to "Destroy",@book, method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{@book.id}" %></td>
 				<% end %>
-					<!-- いいね機能（非同期） -->
-					<td id="favorites_buttons_<%= @book.id %>">
-						<%= render partial: 'favorites/favorite', locals: { book: @book} %>
-					</td>
-					<!-- いいね機能（非同期） -->
+
+				<!-- いいね機能（非同期） -->
+				<td id="favorites_buttons_<%= @book.id %>">
+					<%= render partial: 'favorites/favorite', locals: { book: @book} %>
+				</td>
+				<!-- いいね機能（非同期） -->
+
 				<td>コメント数：
 					<a href="#comments"><%= @book.book_comments.count %></a>
 				</td>
@@ -39,35 +41,22 @@
 		</table>
 	</div>
 
-	<!-- コメント機能 -->
+	<!-- コメント機能(非同期) -->
 	<div class = "col-xs-9">
 		<h2>Comments</h2>
-		<table class = "table">
-			<tbody>
-				<% @book.book_comments.each do |book_comment| %>
-				<tr>
-					<td>
-						<%= link_to user_path(book_comment.user.id) do %>
-						<%= attachment_image_tag book_comment.user, :profile_image, :fill, 40, 40, format:'jpeg', fallback: "no_image.jpg", size: '50x50' %></td>
-						<% end %>
-						<td><%= book_comment.comment %></td>
-						<% if book_comment.user == current_user %>
-						<td>
-							<a class="btn btn-danger btn-sm" rel="nofollow" data-method="delete" href="/books/<%=@book.id %>/book_comments/<%= book_comment.id %>">Destroy</a>
-						</td>
-						<% end %>
-						<td colspan ="3" ></td>
-						<% end %>
-					</tr>
-				</tbody>
-			</table>
-			<%= form_for [@book, @book_comment] do |f| %>
-			<%= f.text_area :comment, row:'5', class: "form-control", placeholder: "コメントはここに" %>
-			<div class = "float-xs-right" >
-				<%= f.submit 'Create comment', name:"comment", class: "btn-btn-primary col-xs-3" %>
-			</div>
-			<% end %>
+		<table id = "comments_area" class = "table">
 
-		</div>
+			<!-- 投稿されたコメント一覧をbookの詳細ページに表示するためのrender -->
+			<%= render partial: 'book_comments/index', locals: { comments: @comments } %>
+			<!-- 投稿されたコメント一覧をbookの詳細ページに表示するためのrender -->
+		</table>
+
+		<!-- コメント入力欄をbookの詳細ページに表示するためのrender -->
+		<%= render partial: 'book_comments/form', locals: {comment: @comment, book: @book } %>
+				<!-- コメント入力欄をbookの詳細ページに表示するためのrender -->
+
 	</div>
+	<!-- コメント機能(非同期) -->
+
+</div>
 

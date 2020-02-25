@@ -8,7 +8,6 @@ class SearchController < ApplicationController
       @users = User.search(method,@word)
     elsif params[:search_select] == "book_search"
       @books = Book.search(method,@word)
-
     end
   end
 
