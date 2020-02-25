@@ -75,7 +75,7 @@
     var transitLayer = new google.maps.TransitLayer();
     transitLayer.setMap(map);
 
-    var contentString = '住所：<%= @user.address_street %>';
+    var contentString = '住所：<%= @user.address %>';
     var infowindow = new google.maps.InfoWindow({
       content: contentString
     });
