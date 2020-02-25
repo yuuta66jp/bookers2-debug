@@ -78,3 +78,7 @@ gem 'jquery-rails'
 gem 'font-awesome-rails'
 gem 'jp_prefecture'
 
+# 環境変数を扱う
+gem 'dotenv-rails'
+
+gem 'geocoder'

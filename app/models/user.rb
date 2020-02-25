@@ -1,8 +1,19 @@
 class User < ApplicationRecord
+  include JpPrefecture
+  jp_prefecture :prefecture_code
+
+  # モデル登録時にgeocoderにより、緯度・軽度のデータを登録される。
+  geocoded_by :address
+  after_validation :geocode
+
+  def address
+    address_city + address_street
+  end
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable,:validatable
+  :recoverable, :rememberable, :trackable,:validatable
   # 各modelとの関連付け（アソシエーション）
   has_many :books, dependent: :destroy
   has_many :favorites, dependent: :destroy
@@ -19,6 +30,15 @@ class User < ApplicationRecord
   has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id'
   # source: :userで出口をuser_idにする。userテーブルから自分をフォローしているuserを取ってくる
   has_many :followers, through: :reverse_of_relationships, source: :user
+
+  # 住所自動入力
+  def prefecture_name
+    JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)
+  end
+
+  def prefecture_name=(prefecture_name)
+    self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
+  end
 
   # userモデルにフォロー機能のメッソドを記載
   def follow(other_user)
