@@ -9,7 +9,6 @@ class ThanksMailer < ActionMailer::Base
   def registration_confirmation(user)
     @user = user
     @greeting = "Hi" + @user.name
-    binding.pry
     mail to: @user.email, subject: '新規登録完了のご連絡'
   end
 end
