@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # ルーティングはファイルの上から記載順にマッチする。
-  devise_for :users
+  # deviseコントローラーを継承してカスタマイズ
+  devise_for :users, :controllers => {
+    :registrations => "users/registrations"
+  }
 
   # menberメッソドによりユーザーidが含まれるURLを作成
   resources :users,only: [:show,:index,:edit,:update] do
