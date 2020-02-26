@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # ルーティングはファイルの上から記載順にマッチする。
   # deviseコントローラーを継承してカスタマイズ
   devise_for :users, :controllers => {
@@ -25,5 +26,7 @@ Rails.application.routes.draw do
   get 'search', to: 'search#search'
 
   get 'home/about', to: 'home#about'
+
+  get 'chat/show'
 
 end

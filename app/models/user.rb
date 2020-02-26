@@ -31,6 +31,11 @@ class User < ApplicationRecord
   # source: :userで出口をuser_idにする。userテーブルから自分をフォローしているuserを取ってくる
   has_many :followers, through: :reverse_of_relationships, source: :user
 
+  # １対１のチャット機能関連づけ
+  has_many :chats, dependent: :destroy
+  has_many :user_rooms, dependent: :destroy
+
+
   # 住所自動入力
   def prefecture_name
     JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)
