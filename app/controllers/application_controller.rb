@@ -18,4 +18,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :postcode, :prefecture_code, :address_city, :address_street, :latitude, :longitude])
     #sign_upの際にnameのデータ操作を許。追加したカラム。
   end
+    def correct_user?(user)
+      if current_user.nil?
+        return false
+      else
+        user.id.equal?(current_user.id)
+      end
+    end
 end

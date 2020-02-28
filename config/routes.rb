@@ -27,6 +27,6 @@ Rails.application.routes.draw do
 
   get 'home/about', to: 'home#about'
 
-  get 'chat/show'
+  get 'chat/:id', to: 'chat#show', as: 'chat'
 
 end
